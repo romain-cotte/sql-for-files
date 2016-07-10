@@ -107,18 +107,18 @@ std::ostream& FQ::FQ_Driver::process_query(std::ostream &stream) {
   int prevOcc, fieldNumber;
   int i, l;
   bool first;
+  std::vector<std::string> buff;
   if (file.is_open()) {
     while (getline(file, line)) {
       prevOcc = -1;
       fieldNumber = 1;
       first = true;
-      // std::cout << line << std::endl;
       for (i = 0, l = line.size(); i < l; i++) {
+        buff.clear();
         if (line[i] == this->delimiter) {
-          // std::cout << "fieldNumber:" << fieldNumber << std::endl;
-          // std::cout << "i:" << i << std::endl;
-          // std::cout << "line[i]:" << line[i] << std::endl;
-          // std::cout << "prevOcc:" << prevOcc << std::endl;
+          buff.push_back(line.substr(prevOcc + 1, i - prevOcc - 1));
+          // std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
+
           auto f = std::find(this->select.begin(),
                              this->select.end(),
                              fieldNumber);
@@ -148,6 +148,7 @@ std::ostream& FQ::FQ_Driver::process_query(std::ostream &stream) {
       }
 
       std::cout << std::endl;
+
     }
     file.close();
   } else {

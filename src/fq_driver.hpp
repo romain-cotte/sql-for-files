@@ -11,7 +11,7 @@
 
 namespace FQ {
 
-class FQ_Driver{
+class FQ_Driver {
 public:
    FQ_Driver() = default;
 
@@ -39,11 +39,6 @@ private:
 
    void parse_helper(std::istream &stream);
 
-   std::size_t  chars      = 0;
-   std::size_t  words      = 0;
-   std::size_t  lines      = 0;
-   std::size_t  uppercase  = 0;
-   std::size_t  lowercase  = 0;
    FQ::FQ_Parser  *parser  = nullptr;
    FQ::FQ_Scanner *scanner = nullptr;
 
@@ -56,6 +51,7 @@ private:
    std::vector<int> select;
    std::string filename;
    bool mode_interactive;
+   std::vector<std::vector<std::string> > buffer;
 
 };
 

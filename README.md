@@ -3,7 +3,7 @@ Sql for files
 
 [![Build Status](https://img.shields.io/travis/LilMeyer/sql-for-files/master.svg?style=flat-square)](https://travis-ci.org/LilMeyer/sql-for-files)
 
-# Objective
+## Objective
 
 The purpose of this tool is to query data files with SQL language. Given an
 input file :
@@ -34,14 +34,15 @@ will output:
 10;12
 ```
 
-# Backlog
+## Backlog
 
  * [ ] Support path in the filename
+ * [ ] Add LIMIT option
  * [ ] Add ORDER BY option
  * [ ] Add JOIN operation
  * [ ] Add the possibility to give an alias to a filename
  * [ ] Support multiple SELECT
 
-# Contribute
+## Contribute
 
 Don't hesitate to contibute !
