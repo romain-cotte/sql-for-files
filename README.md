@@ -1,7 +1,7 @@
 Sql for files
 =============
 
-[![Build Status](https://travis-ci.org/LilMeyer/sql-for-files.svg?branch=master)](https://travis-ci.org/LilMeyer/sql-for-files)
+[![Build Status](https://img.shields.io/travis/LilMeyer/sql-for-files/master.svg?style=flat-square)](https://travis-ci.org/LilMeyer/sql-for-files)
 
 # Objective
 
