@@ -1,0 +1,44 @@
+###C++###
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+
+*.swp
+*.o
+location.hh
+position.hh
+stack.hh
+fq_lexer.yy.cc
+fq_parser.output
+fq_parser.tab.cc
+fq_parser.tab.hh
+file-query
+sql-file
