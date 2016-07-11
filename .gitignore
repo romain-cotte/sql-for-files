@@ -36,9 +36,9 @@
 location.hh
 position.hh
 stack.hh
-fq_lexer.yy.cc
-fq_parser.output
-fq_parser.tab.cc
-fq_parser.tab.hh
+lexer.yy.cc
+parser.output
+parser.tab.cc
+parser.tab.hh
 file-query
 sql-file
