@@ -6,16 +6,16 @@
 #include <istream>
 #include <vector>
 
-#include "fq_scanner.hpp"
-#include "fq_parser.tab.hh"
+#include "scanner.hpp"
+#include "parser.tab.hh"
 
-namespace FQ {
+namespace sqlforfiles {
 
-class FQ_Driver {
+class Driver {
 public:
-   FQ_Driver() = default;
+   Driver() = default;
 
-   virtual ~FQ_Driver();
+   virtual ~Driver();
 
    /**
     * parse - parse from a file
@@ -38,9 +38,11 @@ public:
 private:
 
    void parse_helper(std::istream &stream);
+   std::vector<std::string> selector(const std::vector<int> select,
+                                     const std::vector<std::string> input);
 
-   FQ::FQ_Parser  *parser  = nullptr;
-   FQ::FQ_Scanner *scanner = nullptr;
+   sqlforfiles::Parser  *parser  = nullptr;
+   sqlforfiles::Scanner *scanner = nullptr;
 
    const std::string red   = "\033[1;31m";
    const std::string blue  = "\033[1;36m";

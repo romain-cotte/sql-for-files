@@ -3,12 +3,12 @@
 #include <string>
 
 /* Implementation of yyFlexScanner */
-#include "fq_scanner.hpp"
+#include "scanner.hpp"
 #undef  YY_DECL
-#define YY_DECL int FQ::FQ_Scanner::yylex(FQ::FQ_Parser::semantic_type * const lval, FQ::FQ_Parser::location_type *location)
+#define YY_DECL int sqlforfiles::Scanner::yylex(sqlforfiles::Parser::semantic_type * const lval, sqlforfiles::Parser::location_type *location)
 
 /* typedef to make the returns for the tokens shorter */
-using token = FQ::FQ_Parser::token;
+using token = sqlforfiles::Parser::token;
 
 /* define yyterminate as this instead of NULL */
 #define yyterminate() return token::END;
@@ -23,7 +23,7 @@ using token = FQ::FQ_Parser::token;
 
 %option debug
 %option nodefault
-%option yyclass="FQ::FQ_Scanner"
+%option yyclass="sqlforfiles::Scanner"
 %option noyywrap
 %option c++
 

@@ -3,16 +3,16 @@
 #include <cassert>
 #include <fstream>
 
-#include "fq_driver.hpp"
+#include "driver.hpp"
 
-FQ::FQ_Driver::~FQ_Driver() {
+sqlforfiles::Driver::~Driver() {
   delete(scanner);
   scanner = nullptr;
   delete(parser);
   parser = nullptr;
 }
 
-void FQ::FQ_Driver::parse(const char * const filename) {
+void sqlforfiles::Driver::parse(const char * const filename) {
   assert(filename != nullptr);
   std::ifstream in_file(filename);
 
@@ -27,7 +27,7 @@ void FQ::FQ_Driver::parse(const char * const filename) {
   return;
 }
 
-void FQ::FQ_Driver::parse(std::istream &stream) {
+void sqlforfiles::Driver::parse(std::istream &stream) {
   if (!stream.good() && stream.eof()) {
     return;
   }
@@ -38,13 +38,13 @@ void FQ::FQ_Driver::parse(std::istream &stream) {
   return;
 }
 
-void FQ::FQ_Driver::parse_helper(std::istream &stream) {
+void sqlforfiles::Driver::parse_helper(std::istream &stream) {
   if (this->mode_interactive) {
     std::cout << "=>";
   }
   delete(scanner);
   try {
-    scanner = new FQ::FQ_Scanner(&stream);
+    scanner = new sqlforfiles::Scanner(&stream);
   }
   catch(std::bad_alloc &ba) {
     std::cerr << "Failed to allocate scanner: (" <<
@@ -54,7 +54,7 @@ void FQ::FQ_Driver::parse_helper(std::istream &stream) {
   delete(parser);
 
   try {
-    parser = new FQ::FQ_Parser(
+    parser = new sqlforfiles::Parser(
       (*scanner), /* scanner */
       (*this)     /* driver */
     );
@@ -82,24 +82,41 @@ void FQ::FQ_Driver::parse_helper(std::istream &stream) {
   return;
 }
 
-void FQ::FQ_Driver::set_mode_interactive(bool is_interactive) {
+void sqlforfiles::Driver::set_mode_interactive(bool is_interactive) {
   this->mode_interactive = is_interactive;
 }
 
 
-void FQ::FQ_Driver::add_filename(const std::string &filename) {
+void sqlforfiles::Driver::add_filename(const std::string &filename) {
   this->filename = filename;
 }
 
-void FQ::FQ_Driver::add_field_selection(const int &i) {
+void sqlforfiles::Driver::add_field_selection(const int &i) {
   select.push_back(i);
 }
 
-void FQ::FQ_Driver::set_delimiter(const std::string &delimiter) {
+void sqlforfiles::Driver::set_delimiter(const std::string &delimiter) {
   this->delimiter = delimiter[1];
 }
 
-std::ostream& FQ::FQ_Driver::process_query(std::ostream &stream) {
+// std::vector<std::string>
+// sqlforfiles::Driver::selector(const std::vector<int> select,
+//                         const std::vector<std::string> input) {
+//   size_t input_size = input.size();
+//   std::vector<std::string> result;
+//   std::vector<std::string>::iterator it;
+//   for (it = select.begin(); it != select.end(); ++it) {
+//     if (*it == -1) { // SELECT *
+
+//     } else {
+//       if (*it >
+//     }
+//     cout << *it << endl;
+//   }
+// }
+
+
+std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
   std::string line;
   std::ifstream file(filename);
   std::string currentString;

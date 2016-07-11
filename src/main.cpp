@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "fq_driver.hpp"
+#include "driver.hpp"
 
 void print_usage() {
   std::cout << "  Usage: file-query [command]" << std::endl;
@@ -23,7 +23,7 @@ int main(const int argc, const char **argv) {
     return EXIT_FAILURE;
   }
 
-  FQ::FQ_Driver driver;
+  sqlforfiles::Driver driver;
   /** example for piping input from terminal, i.e., using cat **/
   if (std::strncmp(argv[1], "-o", 2) == 0 ||
       std::strncmp(argv[1], "--output", 2) == 0) {

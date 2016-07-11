@@ -2,13 +2,13 @@
 %require  "3.0"
 %debug
 %defines
-%define api.namespace { FQ }
-%define parser_class_name { FQ_Parser }
+%define api.namespace { sqlforfiles }
+%define parser_class_name { Parser }
 
 %code requires {
-  namespace FQ {
-    class FQ_Driver;
-    class FQ_Scanner;
+  namespace sqlforfiles {
+    class Driver;
+    class Scanner;
   }
 
 // The following definitions is missing when %locations isn't used
@@ -22,8 +22,8 @@
 
 }
 
-%parse-param { FQ_Scanner &scanner }
-%parse-param { FQ_Driver &driver }
+%parse-param { Scanner &scanner }
+%parse-param { Driver &driver }
 
 %code{
    #include <iostream>
@@ -31,7 +31,7 @@
    #include <fstream>
 
    /* include for all driver functions */
-   #include "fq_driver.hpp"
+   #include "driver.hpp"
 
 #undef yylex
 #define yylex scanner.yylex
@@ -83,6 +83,6 @@ list_integer
 
 %%
 
-void FQ::FQ_Parser::error(const location_type &l, const std::string &err_message) {
+void sqlforfiles::Parser::error(const location_type &l, const std::string &err_message) {
   std::cerr << "Error: " << err_message << " at " << l << "\n";
 }

@@ -15,7 +15,7 @@ CXXFLAGS = -Wno-deprecated-register -O0 $(CXXDEBUG) $(CXXSTD)
 
 BUILD = build
 DIR = src
-CPPOBJ = main fq_driver
+CPPOBJ = main driver
 SOBJ = parser lexer
 
 FILES = $(addprefix $(DIR)/, $(addsuffix .cpp, $(CPPOBJ)))
@@ -23,16 +23,14 @@ FILES = $(addprefix $(DIR)/, $(addsuffix .cpp, $(CPPOBJ)))
 OBJS  = $(addprefix $(DIR)/, $(addsuffix .o, $(CPPOBJ)))
 
 CLEANLIST =  $(addsuffix .o, $(OBJ)) $(OBJS) \
-	fq_parser.tab.cc fq_parser.tab.hh \
+	parser.tab.cc parser.tab.hh \
 	location.hh position.hh \
-	stack.hh fq_parser.output parser.o \
-	lexer.o fq_lexer.yy.cc $(EXE)\
-	$(addprefix $(DIR)/, fq_parser.tab.cc fq_parser.tab.hh \
+	stack.hh parser.output parser.o \
+	lexer.o lexer.yy.cc $(EXE)\
+	$(addprefix $(DIR)/, parser.tab.cc parser.tab.hh \
 	location.hh position.hh \
-	stack.hh fq_parser.output parser.o \
-	lexer.o fq_lexer.yy.cc $(EXE))
-
-.PHONY: all
+	stack.hh parser.output parser.o \
+	lexer.o lexer.yy.cc $(EXE))
 
 all: wc test
 
@@ -42,22 +40,24 @@ wc: $(FILES)
 	$(MAKE) $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $(BUILD)/$(EXE) $(OBJS) $(DIR)/parser.o $(DIR)/lexer.o $(LIBS)
 
-parser: $(DIR)/fq_parser.yy
-	bison -d -v $(DIR)/fq_parser.yy -o $(DIR)/fq_parser.tab.cc
-	$(CXX) $(CXXFLAGS) -c -o $(DIR)/parser.o $(DIR)/fq_parser.tab.cc
+parser: $(DIR)/parser.yy
+	bison -d -v $(DIR)/parser.yy -o $(DIR)/parser.tab.cc
+	$(CXX) $(CXXFLAGS) -c -o $(DIR)/parser.o $(DIR)/parser.tab.cc
 
-lexer: $(DIR)/fq_lexer.l
-	flex --outfile=$(DIR)/fq_lexer.yy.cc $<
-	$(CXX) $(CXXFLAGS) -c $(DIR)/fq_lexer.yy.cc -o $(DIR)/lexer.o
+lexer: $(DIR)/lexer.l
+	flex --outfile=$(DIR)/lexer.yy.cc $<
+	$(CXX) $(CXXFLAGS) -c $(DIR)/lexer.yy.cc -o $(DIR)/lexer.o
 
-.PHONY: test
 test:
 	cd test/global && ./test0.pl
 
 start:
 	./$(BUILD)/$(EXE) -o
 
-.PHONY: clean
+install:
+	cp ./$(BUILD)/$(EXE) ~/bin
+
 clean:
 	rm -rf $(CLEANLIST)
 
+.PHONY: clean test all
