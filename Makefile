@@ -48,6 +48,13 @@ lexer: $(DIR)/lexer.l
 	flex --outfile=$(DIR)/lexer.yy.cc $<
 	$(CXX) $(CXXFLAGS) -c $(DIR)/lexer.yy.cc -o $(DIR)/lexer.o
 
+
+unittest: $(DIR)/util/unittest_test.cpp
+	$(CXX) $(CXXFLAGS) $(DIR)/util/unittest_test.cpp -o $@
+
+# $(STATIC_OUTDIR)/hash_test:util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS)
+# 	$(CXX) $(LDFLAGS) $(CXXFLAGS) util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)
+
 test:
 	cd test/global && ./test0.pl
 
