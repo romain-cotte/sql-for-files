@@ -14,20 +14,21 @@ CFLAGS = -Wno-deprecated-register -O0 $(CDEBUG) $(CSTD)
 CXXFLAGS = -Wno-deprecated-register -O0 $(CXXDEBUG) $(CXXSTD)
 
 BUILD = build
-DIR = src
+SOURCE_DIR = src
+STATIC_OUTDIR=out-static
 CPPOBJ = main driver
 SOBJ = parser lexer
 
-FILES = $(addprefix $(DIR)/, $(addsuffix .cpp, $(CPPOBJ)))
+FILES = $(addprefix $(SOURCE_DIR)/, $(addsuffix .cpp, $(CPPOBJ)))
 
-OBJS  = $(addprefix $(DIR)/, $(addsuffix .o, $(CPPOBJ)))
+OBJS  = $(addprefix $(SOURCE_DIR)/, $(addsuffix .o, $(CPPOBJ)))
 
 CLEANLIST =  $(addsuffix .o, $(OBJ)) $(OBJS) \
 	parser.tab.cc parser.tab.hh \
 	location.hh position.hh \
 	stack.hh parser.output parser.o \
 	lexer.o lexer.yy.cc $(EXE)\
-	$(addprefix $(DIR)/, parser.tab.cc parser.tab.hh \
+	$(addprefix $(SOURCE_DIR)/, parser.tab.cc parser.tab.hh \
 	location.hh position.hh \
 	stack.hh parser.output parser.o \
 	lexer.o lexer.yy.cc $(EXE))
@@ -38,19 +39,21 @@ wc: $(FILES)
 	echo $(FILES)
 	$(MAKE) $(SOBJ)
 	$(MAKE) $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(BUILD)/$(EXE) $(OBJS) $(DIR)/parser.o $(DIR)/lexer.o $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $(BUILD)/$(EXE) $(OBJS) $(SOURCE_DIR)/parser.o $(SOURCE_DIR)/lexer.o $(LIBS)
 
-parser: $(DIR)/parser.yy
-	bison -d -v $(DIR)/parser.yy -o $(DIR)/parser.tab.cc
-	$(CXX) $(CXXFLAGS) -c -o $(DIR)/parser.o $(DIR)/parser.tab.cc
+parser: $(SOURCE_DIR)/parser.yy
+	bison -d -v $(SOURCE_DIR)/parser.yy -o $(SOURCE_DIR)/parser.tab.cc
+	$(CXX) $(CXXFLAGS) -c -o $(SOURCE_DIR)/parser.o $(SOURCE_DIR)/parser.tab.cc
 
-lexer: $(DIR)/lexer.l
-	flex --outfile=$(DIR)/lexer.yy.cc $<
-	$(CXX) $(CXXFLAGS) -c $(DIR)/lexer.yy.cc -o $(DIR)/lexer.o
+lexer: $(SOURCE_DIR)/lexer.l
+	flex --outfile=$(SOURCE_DIR)/lexer.yy.cc $<
+	$(CXX) $(CXXFLAGS) -c $(SOURCE_DIR)/lexer.yy.cc -o $(SOURCE_DIR)/lexer.o
 
+$(STATIC_OUTDIR):
+	mkdir $@
 
-unittest: $(DIR)/util/unittest_test.cpp
-	$(CXX) $(CXXFLAGS) $(DIR)/util/unittest_test.cpp -o $@
+unittest: $(SOURCE_DIR)/util/unittest_test.cpp
+	$(CXX) $(CXXFLAGS) $(SOURCE_DIR)/util/unittest_test.cpp -o $(STATIC_OUTDIR)/$@
 
 # $(STATIC_OUTDIR)/hash_test:util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS)
 # 	$(CXX) $(LDFLAGS) $(CXXFLAGS) util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)
@@ -67,4 +70,4 @@ install:
 clean:
 	rm -rf $(CLEANLIST)
 
-.PHONY: clean test all
+.PHONY: clean test all unittest

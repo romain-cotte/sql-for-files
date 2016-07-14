@@ -42,3 +42,4 @@ parser.tab.cc
 parser.tab.hh
 file-query
 sql-file
+out-static
