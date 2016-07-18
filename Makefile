@@ -54,6 +54,7 @@ $(STATIC_OUTDIR):
 
 unittest: $(SOURCE_DIR)/util/unittest_test.cpp
 	$(CXX) $(CXXFLAGS) $(SOURCE_DIR)/util/unittest_test.cpp -o $(STATIC_OUTDIR)/$@
+	./$(STATIC_OUTDIR)/$@
 
 # $(STATIC_OUTDIR)/hash_test:util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS)
 # 	$(CXX) $(LDFLAGS) $(CXXFLAGS) util/hash_test.cc $(STATIC_LIBOBJECTS) $(TESTHARNESS) -o $@ $(LIBS)

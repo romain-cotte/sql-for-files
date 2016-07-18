@@ -2,7 +2,7 @@
 #include "unittest.hpp"
 
 namespace sqlforfiles {
-namespace test {
+namespace unittest {
 
 class Tester {
  private:
