@@ -10,8 +10,8 @@ CXXDEBUG = -g -Wall
 CSTD = -std=c99
 CXXSTD = -std=c++14
 
-CFLAGS = -Wno-deprecated-register -O0 $(CDEBUG) $(CSTD)
-CXXFLAGS = -Wno-deprecated-register -O0 $(CXXDEBUG) $(CXXSTD)
+CFLAGS = -O0 $(CDEBUG) $(CSTD)
+CXXFLAGS = -O0 $(CXXDEBUG) $(CXXSTD)
 
 BUILD = build
 SOURCE_DIR = src
