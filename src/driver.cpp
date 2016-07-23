@@ -2,8 +2,10 @@
 #include <fstream>
 #include <cassert>
 #include <fstream>
+#include <vector>
 
 #include "driver.hpp"
+#include "util/vec.hpp"
 
 sqlforfiles::Driver::~Driver() {
   delete(scanner);
@@ -99,21 +101,20 @@ void sqlforfiles::Driver::set_delimiter(const std::string &delimiter) {
   this->delimiter = delimiter[1];
 }
 
-// std::vector<std::string>
-// sqlforfiles::Driver::selector(const std::vector<int> select,
-//                         const std::vector<std::string> input) {
-//   size_t input_size = input.size();
-//   std::vector<std::string> result;
-//   std::vector<std::string>::iterator it;
-//   for (it = select.begin(); it != select.end(); ++it) {
-//     if (*it == -1) { // SELECT *
 
-//     } else {
-//       if (*it >
-//     }
-//     cout << *it << endl;
-//   }
-// }
+template <class T>
+std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
+  out << "[";
+  size_t last = v.size() - 1;
+  for(size_t i = 0; i < v.size(); ++i) {
+    out << v[i];
+    if (i != last) {
+      out << ", ";
+    }
+  }
+  out << "]";
+  return out;
+}
 
 
 std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
@@ -128,7 +129,7 @@ std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
   if (file.is_open()) {
     while (getline(file, line)) {
       prevOcc = -1;
-      fieldNumber = 1;
+      // fieldNumber = 1;
       first = true;
       for (i = 0, l = line.size(); i < l; i++) {
         buff.clear();
@@ -136,35 +137,55 @@ std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
           buff.push_back(line.substr(prevOcc + 1, i - prevOcc - 1));
           // std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
 
-          auto f = std::find(this->select.begin(),
-                             this->select.end(),
-                             fieldNumber);
-          if (f != this->select.end()) {
-            if (first) {
-              std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
-              first = false;
-            } else {
-              std::cout << ";" << line.substr(prevOcc + 1, i - prevOcc - 1);
-            }
-          }
+          // auto f = std::find(this->select.begin(),
+          //                    this->select.end(),
+          //                    fieldNumber);
+          // if (f != this->select.end()) {
+          //   if (first) {
+          //     std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
+          //     first = false;
+          //   } else {
+          //     std::cout << ";" << line.substr(prevOcc + 1, i - prevOcc - 1);
+          //   }
+          // }
           prevOcc = i;
-          fieldNumber++;
+          // fieldNumber++;
         }
       }
 
-      auto f = std::find(this->select.begin(),
-                         this->select.end(),
-                         fieldNumber);
-      if (f != this->select.end()) {
-        if (first) {
-          std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
-          first = false;
-        } else {
-          std::cout << ";" << line.substr(prevOcc + 1, i - prevOcc - 1);
-        }
+
+      std::vector<int>::iterator it;
+      for (it = this->select.begin(); it != this->select.end(); ++it) {
+        std::cout << *it << std::endl;
       }
 
-      std::cout << std::endl;
+      std::cout << "here" << std::endl;
+
+      std::vector<std::string> result = Vec::selector(buff, this->select);
+
+      std::vector<std::string>::iterator it2;
+      std::cout << "----:" << std::endl;
+      for (it2 = result.begin(); it2 != result.end(); ++it2) {
+        std::cout << *it2 << std::endl;
+      }
+
+
+      // std::cout << result << endl;
+      // Vec::output(std::cout, result, ';');
+
+      // auto f = std::find(this->select.begin(),
+      //                    this->select.end(),
+      //                    fieldNumber);
+      // if (f != this->select.end()) {
+      //   if (first) {
+      //     std::cout << line.substr(prevOcc + 1, i - prevOcc - 1);
+      //     first = false;
+      //   } else {
+      //     std::cout << ";" << line.substr(prevOcc + 1, i - prevOcc - 1);
+      //   }
+      // }
+
+      // std::cout << std::endl;
 
     }
     file.close();

@@ -52,7 +52,7 @@ lexer: $(SOURCE_DIR)/lexer.l
 $(STATIC_OUTDIR):
 	mkdir $@
 
-unittest: $(SOURCE_DIR)/util/unittest_test.cpp
+unittest: $(STATIC_OUTDIR) $(SOURCE_DIR)/util/unittest_test.cpp
 	$(CXX) $(CXXFLAGS) $(SOURCE_DIR)/util/unittest_test.cpp -o $(STATIC_OUTDIR)/$@
 	./$(STATIC_OUTDIR)/$@
 

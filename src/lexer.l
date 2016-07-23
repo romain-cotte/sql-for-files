@@ -48,6 +48,11 @@ DELIMITER { return token::DELIMITER; }
             return token::INTEGER;
           }
 
+\*        {
+            yylval->build<int> (-1);
+            return token::INTEGER;
+          }
+
 [a-zA-Z0-9]+\.[a-zA-Z0-9]+ {
             yylval->build<std::string> (yytext);
             return token::FILENAME;

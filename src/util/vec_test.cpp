@@ -8,7 +8,7 @@
 namespace sqlforfiles {
 
 TEST(VecTest, Selector) {
-  std::cout << "VecTest" << std::endl;
+  std::cout << "Vec::selector" << std::endl;
   std::vector<int> v = { 1, 2, 3, 4, 5, 6 };
   std::vector<int> s = { 0, 3 };
   std::vector<int> result = Vec::selector(v, s);
@@ -30,6 +30,33 @@ TEST(VecTest, Selector) {
   result = Vec::selector(v, s);
   expectedResult = { 6, 3 };
   ASSERT_EQ(result, expectedResult);
+
+  s = { -1, 2 };
+  result = Vec::selector(v, s);
+  expectedResult = { 1, 2, 3, 4, 5, 6, 3 };
+  ASSERT_EQ(result, expectedResult);
+
+  s = { -1 };
+  result = Vec::selector(v, s);
+  expectedResult = { 1, 2, 3, 4, 5, 6 };
+  ASSERT_EQ(result, expectedResult);
+
+}
+
+TEST(VecTest, Output) {
+  std::cout << "Vec::output" << std::endl;
+  std::stringstream out;
+  std::vector<std::string> v = { "1", "2" };
+  std::string buff;
+  std::string expectedString = "1;2";
+  Vec::output(out, v, ';');
+  out >> buff;
+  ASSERT_EQ(buff, expectedString);
+
+  expectedString = "1|2";
+  Vec::output(out, v, '|');
+  out >> buff;
+  ASSERT_EQ(buff, expectedString);
 
 }
 

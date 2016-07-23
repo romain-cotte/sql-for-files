@@ -7,6 +7,7 @@ use warnings;
 system("../../build/sql-file query1.txt > temp1.txt");
 system("../../build/sql-file query2.txt > temp2.txt");
 system("../../build/sql-file query3.txt > temp3.txt");
+system("../../build/sql-file query4.txt > temp4.txt");
 
 my $diff = `diff temp1.txt expected1.in`;
 chomp($diff);
