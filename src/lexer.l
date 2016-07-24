@@ -58,6 +58,11 @@ DELIMITER { return token::DELIMITER; }
             return token::FILENAME;
           }
 
+FROM\ [^\ ]+  {
+                yylval->build<std::string> (yytext+5);
+                return token::FROM_FILENAME;
+              }
+
 [a-z]     { return token::LOWER; }
 [A-Z]     { return token::UPPER; }
 

@@ -49,6 +49,7 @@
 %token               LOWER
 %token <std::string> WORD
 %token <std::string> FILENAME
+%token <std::string> FROM_FILENAME
 %token <std::string> DELIMITER_CHARACTER
 %token               NEWLINE
 %token               CHAR
@@ -65,8 +66,8 @@ list_query
   | query list_query
   ;
 
-query: SELECT list_integer FROM FILENAME options SEMICOLON {
-  driver.add_filename($4);
+query: SELECT list_integer FROM_FILENAME options SEMICOLON {
+  driver.add_filename($3);
   driver.process_query(std::cout);
 };
 
