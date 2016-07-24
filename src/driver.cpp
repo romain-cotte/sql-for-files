@@ -86,6 +86,9 @@ void sqlforfiles::Driver::set_mode_interactive(bool is_interactive) {
   this->mode_interactive = is_interactive;
 }
 
+void sqlforfiles::Driver::set_limit(const int &limit) {
+  this->limit = limit;
+}
 
 void sqlforfiles::Driver::add_filename(const std::string &filename) {
   this->filename = filename;
@@ -116,6 +119,7 @@ std::ostream& operator<< (std::ostream& out, const std::vector<T>& v) {
 
 
 std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
+  int lineNb = 0;
   std::string line;
   std::ifstream file(filename);
   int prevOcc, i, l;
@@ -125,6 +129,11 @@ std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
 
   if (file.is_open()) {
     while (getline(file, line)) {
+      lineNb++;
+      if (this->limit && lineNb > this->limit) {
+        break;
+      }
+
       prevOcc = -1;
       buff.clear();
       for (i = 0, l = line.size(); i < l; i++) {

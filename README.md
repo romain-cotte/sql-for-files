@@ -36,8 +36,8 @@ will output:
 
 ## Backlog
 
- * [ ] Support path in the filename
- * [ ] Add LIMIT option
+ * [x] Support path in the filename
+ * [x] Add LIMIT option
  * [ ] Add ORDER BY option
  * [ ] Add JOIN operation
  * [ ] Add the possibility to give an alias to a filename

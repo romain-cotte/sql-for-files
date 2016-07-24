@@ -30,6 +30,7 @@ public:
 
    void add_field_selection(const int &i);
    void set_delimiter(const std::string &delimiter);
+   void set_limit(const int &limit);
    void set_mode_interactive(const bool is_interactive);
    void add_filename(const std::string &filename);
 
@@ -48,8 +49,8 @@ private:
    const std::string blue  = "\033[1;36m";
    const std::string norm  = "\033[0m";
 
-   // std::string delimiter = ";";
    char delimiter = ';';
+   int limit = 0;
    std::vector<int> select;
    std::string filename;
    bool mode_interactive;

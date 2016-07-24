@@ -1,1 +1,1 @@
-SELECT *, 1 FROM data.in DELIMITER ';';
+SELECT *, 1 FROM data.in;

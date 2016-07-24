@@ -45,12 +45,14 @@
 %token               AS
 %token               FROM
 %token               DELIMITER
+%token               LIMIT
 %token               UPPER
 %token               LOWER
 %token <std::string> WORD
 %token <std::string> FILENAME
 %token <std::string> FROM_FILENAME
 %token <std::string> DELIMITER_CHARACTER
+%token <int>         LIMIT_NUMBER
 %token               NEWLINE
 %token               CHAR
 %token <int>         INTEGER
@@ -72,13 +74,14 @@ query: SELECT list_integer FROM_FILENAME options SEMICOLON {
 };
 
 options
-  :
-  | DELIMITER DELIMITER_CHARACTER { driver.set_delimiter($2); }
+  : /* empty */
+  | DELIMITER DELIMITER_CHARACTER options { driver.set_delimiter($2); }
+  | LIMIT INTEGER options                 { driver.set_limit($2); }
   ;
 
 list_integer
-  : INTEGER                    { driver.add_field_selection($1); }
-  | list_integer COMMA INTEGER { driver.add_field_selection($3); }
+  : INTEGER                    { driver.add_field_selection($1-1); }
+  | list_integer COMMA INTEGER { driver.add_field_selection($3-1); }
   ;
 
 

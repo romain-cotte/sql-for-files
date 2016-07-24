@@ -42,14 +42,16 @@ as        { return token::AS;        }
 AS        { return token::AS;        }
 delimiter { return token::DELIMITER; }
 DELIMITER { return token::DELIMITER; }
+limit     { return token::LIMIT;     }
+LIMIT     { return token::LIMIT;     }
 
 [0-9]+    {
-            yylval->build<int> (atoi(yytext)-1);
+            yylval->build<int> (atoi(yytext));
             return token::INTEGER;
           }
 
 \*        {
-            yylval->build<int> (-1);
+            yylval->build<int> (0);
             return token::INTEGER;
           }
 
@@ -58,7 +60,7 @@ DELIMITER { return token::DELIMITER; }
             return token::FILENAME;
           }
 
-FROM\ [^\ ]+  {
+FROM\ [^\ ;]+  {
                 yylval->build<std::string> (yytext+5);
                 return token::FROM_FILENAME;
               }

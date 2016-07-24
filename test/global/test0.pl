@@ -3,47 +3,40 @@
 
 use strict;
 use warnings;
+my $diff = "";
 
-system("../../build/sql-file select/query1.txt > select/temp1.txt");
-system("../../build/sql-file select/query2.txt > select/temp2.txt");
-system("../../build/sql-file select/query3.txt > select/temp3.txt");
-system("../../build/sql-file select/query4.txt > select/temp4.txt");
-system("../../build/sql-file select/query5.txt > select/temp5.txt");
-system("../../build/sql-file select/query6.txt > select/temp6.txt");
 
-my $diff = `diff select/temp1.txt select/expected1.in`;
-chomp($diff);
-if ($diff) {
-  print STDERR $diff;
-  exit(-1);
+for (my $i=1; $i <= 6; $i++) {
+  print "select query $i\n";
+  system("../../build/sql-file select/query$i.txt > select/temp$i.txt");
+  $diff = `diff select/temp$i.txt select/expected$i.in`;
+  chomp($diff);
+  if ($diff) {
+    print STDERR $diff;
+    exit(-1);
+  }
 }
 
-$diff = `diff select/temp2.txt select/expected2.in`;
-chomp($diff);
-if ($diff) {
-  print STDERR $diff;
-  exit(-1);
+for (my $i=1; $i <= 1; $i++) {
+  print "delimiter query $i\n";
+  system("../../build/sql-file delimiter/query$i.txt > delimiter/temp$i.txt");
+  $diff = `diff delimiter/temp$i.txt delimiter/expected$i.in`;
+  chomp($diff);
+  if ($diff) {
+    print STDERR $diff;
+    exit(-1);
+  }
 }
 
-$diff = `diff select/temp3.txt select/expected3.in`;
-chomp($diff);
-if ($diff) {
-  print STDERR $diff;
-  exit(-1);
-}
-
-$diff = `diff select/temp4.txt select/expected4.in`;
-chomp($diff);
-if ($diff) {
-  print STDERR $diff;
-  exit(-1);
-}
-
-$diff = `diff select/temp5.txt select/expected5.in`;
-chomp($diff);
-if ($diff) {
-  print STDERR $diff;
-  exit(-1);
+for (my $i=1; $i <= 1; $i++) {
+  print "limit query $i\n";
+  system("../../build/sql-file limit/query$i.txt > limit/temp$i.txt");
+  $diff = `diff limit/temp$i.txt limit/expected$i.in`;
+  chomp($diff);
+  if ($diff) {
+    print STDERR $diff;
+    exit(-1);
+  }
 }
 
 print STDERR "***PASSED***\n";
