@@ -44,7 +44,7 @@ delimiter { return token::DELIMITER; }
 DELIMITER { return token::DELIMITER; }
 
 [0-9]+    {
-            yylval->build<int> (atoi(yytext));
+            yylval->build<int> (atoi(yytext)-1);
             return token::INTEGER;
           }
 
