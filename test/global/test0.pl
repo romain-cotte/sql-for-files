@@ -39,6 +39,17 @@ for (my $i=1; $i <= 1; $i++) {
   }
 }
 
+# for (my $i=1; $i <= 1; $i++) {
+#   print "order-by query $i\n";
+#   system("../../build/sql-file order-by/query$i.txt > order-by/temp$i.txt");
+#   $diff = `diff order-by/temp$i.txt order-by/expected$i.in`;
+#   chomp($diff);
+#   if ($diff) {
+#     print STDERR $diff;
+#     exit(-1);
+#   }
+# }
+
 print STDERR "***PASSED***\n";
 # unlink("temp.txt");
 exit(0);

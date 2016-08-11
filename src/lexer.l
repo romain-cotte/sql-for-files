@@ -44,6 +44,26 @@ delimiter { return token::DELIMITER; }
 DELIMITER { return token::DELIMITER; }
 limit     { return token::LIMIT;     }
 LIMIT     { return token::LIMIT;     }
+ORDER[\ ]+BY { return token::ORDER_BY;  }
+order[\ ]+by { return token::ORDER_BY;  }
+DESC      {
+            yylval->build<int> (-1);
+            return token::DESC;
+          }
+desc      {
+            yylval->build<int> (-1);
+            return token::DESC;
+          }
+
+ASC       {
+            yylval->build<int> (1);
+            return token::ASC;
+          }
+asc       {
+            yylval->build<int> (1);
+            return token::ASC;
+          }
+
 
 [0-9]+    {
             yylval->build<int> (atoi(yytext));

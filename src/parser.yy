@@ -46,6 +46,9 @@
 %token               FROM
 %token               DELIMITER
 %token               LIMIT
+%token               ORDER_BY
+%token <int>         ASC
+%token <int>         DESC
 %token               UPPER
 %token               LOWER
 %token <std::string> WORD
@@ -68,10 +71,22 @@ list_query
   | query list_query
   ;
 
-query: SELECT list_integer FROM_FILENAME options SEMICOLON {
+query: SELECT list_integer FROM_FILENAME order_by options SEMICOLON {
   driver.add_filename($3);
   driver.process_query(std::cout);
 };
+
+order_by
+  : /* empty */
+  | ORDER_BY list_integer order
+  ;
+
+order
+  : /* empty */
+  | ASC        { driver.set_order($1); }
+  | DESC       { driver.set_order($1); }
+  ;
+
 
 options
   : /* empty */

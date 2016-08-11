@@ -90,6 +90,10 @@ void sqlforfiles::Driver::set_limit(const int &limit) {
   this->limit = limit;
 }
 
+void sqlforfiles::Driver::set_order(const int &order) {
+  this->order = order;
+}
+
 void sqlforfiles::Driver::add_filename(const std::string &filename) {
   this->filename = filename;
 }
@@ -125,7 +129,6 @@ std::ostream& sqlforfiles::Driver::process_query(std::ostream &stream) {
   int prevOcc, i, l;
   std::vector<std::string> buff, result;
   std::vector<std::string>::iterator it;
-
 
   if (file.is_open()) {
     while (getline(file, line)) {

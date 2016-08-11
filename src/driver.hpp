@@ -11,6 +11,8 @@
 
 namespace sqlforfiles {
 
+enum Order { not_set, asc, desc };
+
 class Driver {
 public:
    Driver() = default;
@@ -31,6 +33,7 @@ public:
    void add_field_selection(const int &i);
    void set_delimiter(const std::string &delimiter);
    void set_limit(const int &limit);
+   void set_order(const int &order);
    void set_mode_interactive(const bool is_interactive);
    void add_filename(const std::string &filename);
 
@@ -51,6 +54,7 @@ private:
 
    char delimiter = ';';
    int limit = 0;
+   int order = 0;
    std::vector<int> select;
    std::string filename;
    bool mode_interactive;
